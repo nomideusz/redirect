@@ -10,7 +10,7 @@ app.get('*', (req, res) => {
   const host = req.headers.host;
   
   // Only redirect if we're not already on www subdomain
-  if (!host.startsWith('www.')) {
+  if (host.startsWith('www.')) {
     // Get the path and query parameters from the request
     const path = req.path;
     const queryString = req.url.includes('?') ? req.url.substring(req.url.indexOf('?')) : '';
@@ -19,14 +19,14 @@ app.get('*', (req, res) => {
     const baseDomain = host.includes('.') ? host.substring(host.indexOf('.') + 1) : host;
     
     // Construct the destination URL
-    const destinationUrl = `https://www.${baseDomain}${path}${queryString}`;
+    const destinationUrl = `https://${baseDomain}${path}${queryString}`;
     
     // Redirect with 301 (permanent redirect) status
     return res.redirect(301, destinationUrl);
   }
   
   // If we're already on www, just serve the content
-  res.send('This is the www version of the site');
+  res.send('This is Zaur.');
 });
 
 // Start the server
